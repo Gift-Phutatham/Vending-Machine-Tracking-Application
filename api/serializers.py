@@ -6,4 +6,4 @@ from .models import VendingMachine
 class VendingMachineSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = VendingMachine
-        fields = ('name', 'location')
+        fields = ('name', 'location', 'is_active')
