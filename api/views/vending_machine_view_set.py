@@ -5,5 +5,5 @@ from api.serializers.vending_machine_serializer import VendingMachineSerializer
 
 
 class VendingMachineViewSet(viewsets.ModelViewSet):
-    queryset = VendingMachine.objects.all().order_by('name')
+    queryset = VendingMachine.objects.all()
     serializer_class = VendingMachineSerializer
