@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import VendingMachine
+from api.models.vending_machine import VendingMachine
 
 
 class VendingMachineSerializer(serializers.HyperlinkedModelSerializer):

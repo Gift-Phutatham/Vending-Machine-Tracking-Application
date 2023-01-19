@@ -1,9 +1,13 @@
 from django.urls import path, include
 from rest_framework import routers
-from . import views
+from api.views.vending_machine_view_set import VendingMachineViewSet
+from api.views.product_view_set import ProductViewSet
+from api.views.stock_view_set import StockViewSet
 
 router = routers.DefaultRouter()
-router.register(r'vending-machine', views.VendingMachineViewSet)
+router.register(r'vending-machine', VendingMachineViewSet)
+router.register(r'product', ProductViewSet)
+router.register(r'stock', StockViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

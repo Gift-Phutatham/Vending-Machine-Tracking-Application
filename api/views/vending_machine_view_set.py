@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import VendingMachineSerializer
-from .models import VendingMachine
+from api.serializers.vending_machine_serializer import VendingMachineSerializer
+from api.models.vending_machine import VendingMachine
 
 
 class VendingMachineViewSet(viewsets.ModelViewSet):
