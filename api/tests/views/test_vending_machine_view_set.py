@@ -1,4 +1,5 @@
 import secrets
+from typing import Any
 
 from django.test import TestCase
 from rest_framework import status
@@ -6,8 +7,8 @@ from rest_framework import status
 from api.models.vending_machine import VendingMachine
 
 
-def save_vending_machine():
-    vending_machine = VendingMachine(
+def save_vending_machine() -> VendingMachine:
+    vending_machine: VendingMachine = VendingMachine(
         id=1,
         name=secrets.token_hex(16),
         location=secrets.token_hex(16),
@@ -18,10 +19,10 @@ def save_vending_machine():
 
 
 class TestVendingMachineViewSet(TestCase):
-    path = '/vending-machine/'
+    path: str = '/vending-machine/'
 
     def test_create_vending_machine_should_pass(self):
-        new_vending_machine = {
+        new_vending_machine: dict[str, Any] = {
             'name': secrets.token_hex(16),
             'location': secrets.token_hex(16),
             'is_active': True
@@ -33,15 +34,15 @@ class TestVendingMachineViewSet(TestCase):
         self.assertEqual(response.data['is_active'], new_vending_machine['is_active'])
 
     def test_create_vending_machine_should_fail_when_name_is_null(self):
-        new_vending_machine = {
+        new_vending_machine: dict[str, Any] = {
             'location': secrets.token_hex(16)
         }
         response = self.client.post(self.path, data=new_vending_machine, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_vending_machine_should_fail_when_name_is_duplicate(self):
-        saved_vending_machine = save_vending_machine()
-        new_vending_machine = {
+        saved_vending_machine: VendingMachine = save_vending_machine()
+        new_vending_machine: dict[str, Any] = {
             'name': saved_vending_machine.name,
             'location': secrets.token_hex(16),
             'is_active': True
@@ -50,14 +51,14 @@ class TestVendingMachineViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_vending_machine_should_fail_when_location_is_null(self):
-        new_vending_machine = {
+        new_vending_machine: dict[str, Any] = {
             'name': secrets.token_hex(16)
         }
         response = self.client.post(self.path, data=new_vending_machine, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_vending_machine_should_fail_when_is_active_is_invalid(self):
-        new_vending_machine = {
+        new_vending_machine: dict[str, Any] = {
             'name': secrets.token_hex(16),
             'location': secrets.token_hex(16),
             'is_active': 'x'
@@ -66,7 +67,7 @@ class TestVendingMachineViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_list_vending_machine_should_pass(self):
-        saved_vending_machine = save_vending_machine()
+        saved_vending_machine: VendingMachine = save_vending_machine()
         response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
@@ -75,7 +76,7 @@ class TestVendingMachineViewSet(TestCase):
         self.assertEqual(response.data[0]['is_active'], saved_vending_machine.is_active)
 
     def test_view_vending_machine_should_pass(self):
-        saved_vending_machine = save_vending_machine()
+        saved_vending_machine: VendingMachine = save_vending_machine()
         response = self.client.get(f'{self.path}{saved_vending_machine.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], saved_vending_machine.name)
@@ -87,8 +88,8 @@ class TestVendingMachineViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_vending_machine_should_pass(self):
-        saved_vending_machine = save_vending_machine()
-        new_vending_machine = {
+        saved_vending_machine: VendingMachine = save_vending_machine()
+        new_vending_machine: dict[str, Any] = {
             'name': secrets.token_hex(16),
             'location': secrets.token_hex(16),
             'is_active': False
@@ -104,7 +105,7 @@ class TestVendingMachineViewSet(TestCase):
         self.assertEqual(response.data['is_active'], new_vending_machine['is_active'])
 
     def test_update_vending_machine_should_fail_when_id_is_not_found(self):
-        new_vending_machine = {
+        new_vending_machine: dict[str, Any] = {
             'name': secrets.token_hex(16),
             'location': secrets.token_hex(16),
             'is_active': True
@@ -113,7 +114,7 @@ class TestVendingMachineViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_vending_machine_should_pass(self):
-        saved_vending_machine = save_vending_machine()
+        saved_vending_machine: VendingMachine = save_vending_machine()
         response = self.client.delete(f'{self.path}{saved_vending_machine.id}/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 

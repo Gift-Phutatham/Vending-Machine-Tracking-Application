@@ -1,4 +1,5 @@
 import secrets
+from typing import Any
 
 from django.test import TestCase
 from rest_framework import status
@@ -6,8 +7,8 @@ from rest_framework import status
 from api.models.product import Product
 
 
-def save_product():
-    product = Product(
+def save_product() -> Product:
+    product: Product = Product(
         id=1,
         name=secrets.token_hex(16),
         cost='{:.2f}'.format(secrets.randbelow(1000))
@@ -17,10 +18,10 @@ def save_product():
 
 
 class TestProductViewSet(TestCase):
-    path = '/product/'
+    path: str = '/product/'
 
     def test_create_product_should_pass(self):
-        new_product = {
+        new_product: dict[str, Any] = {
             'name': secrets.token_hex(16),
             'cost': '{:.2f}'.format(secrets.randbelow(1000))
         }
@@ -30,15 +31,15 @@ class TestProductViewSet(TestCase):
         self.assertEqual(response.data['cost'], new_product['cost'])
 
     def test_create_product_should_fail_when_name_is_null(self):
-        new_product = {
+        new_product: dict[str, Any] = {
             'cost': '{:.2f}'.format(secrets.randbelow(1000))
         }
         response = self.client.post(self.path, data=new_product, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_product_should_fail_when_name_is_duplicate(self):
-        saved_product = save_product()
-        new_product = {
+        saved_product: Product = save_product()
+        new_product: dict[str, Any] = {
             'name': saved_product.name,
             'cost': '{:.2f}'.format(secrets.randbelow(1000))
         }
@@ -46,14 +47,14 @@ class TestProductViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_product_should_fail_when_cost_is_null(self):
-        new_product = {
+        new_product: dict[str, Any] = {
             'name': secrets.token_hex(16)
         }
         response = self.client.post(self.path, data=new_product, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_list_product_should_pass(self):
-        saved_product = save_product()
+        saved_product: Product = save_product()
         response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
@@ -61,7 +62,7 @@ class TestProductViewSet(TestCase):
         self.assertEqual(response.data[0]['cost'], saved_product.cost)
 
     def test_view_product_should_pass(self):
-        saved_product = save_product()
+        saved_product: Product = save_product()
         response = self.client.get(f'{self.path}{saved_product.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], saved_product.name)
@@ -72,8 +73,8 @@ class TestProductViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_product_should_pass(self):
-        saved_product = save_product()
-        new_product = {
+        saved_product: Product = save_product()
+        new_product: dict[str, Any] = {
             'name': secrets.token_hex(16),
             'cost': '{:.2f}'.format(secrets.randbelow(1000))
         }
@@ -83,7 +84,7 @@ class TestProductViewSet(TestCase):
         self.assertEqual(response.data['cost'], new_product['cost'])
 
     def test_update_product_should_fail_when_id_is_not_found(self):
-        new_product = {
+        new_product: dict[str, Any] = {
             'name': secrets.token_hex(16),
             'cost': '{:.2f}'.format(secrets.randbelow(1000))
         }
@@ -91,7 +92,7 @@ class TestProductViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_product_should_pass(self):
-        saved_product = save_product()
+        saved_product: Product = save_product()
         response = self.client.delete(f'{self.path}{saved_product.id}/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 

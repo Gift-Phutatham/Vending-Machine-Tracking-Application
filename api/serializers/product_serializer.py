@@ -6,4 +6,4 @@ from api.models.product import Product
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name', 'cost')
+        fields: tuple[str, str, str] = ('id', 'name', 'cost')

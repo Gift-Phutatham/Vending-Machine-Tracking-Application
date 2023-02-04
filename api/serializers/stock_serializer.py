@@ -6,4 +6,4 @@ from api.models.stock import Stock
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
-        fields = ('id', 'vending_machine', 'product', 'quantity')
+        fields: tuple[str, str, str, str] = ('id', 'vending_machine', 'product', 'quantity')
