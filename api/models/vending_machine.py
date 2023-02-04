@@ -1,11 +1,13 @@
 from django.db import models
+from django.db.models import AutoField, CharField, BooleanField
 
 
 class VendingMachine(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, unique=True)
-    location = models.CharField(max_length=100)
-    is_active = models.BooleanField(default=True)
+    """
+    Vending Machine model.
+    """
 
-    def __str__(self):
-        return self.name
+    id: AutoField = models.AutoField(primary_key=True)
+    name: CharField = models.CharField(max_length=100, unique=True)
+    location: CharField = models.CharField(max_length=100)
+    is_active: BooleanField = models.BooleanField(default=True)
