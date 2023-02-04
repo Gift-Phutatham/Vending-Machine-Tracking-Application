@@ -43,7 +43,7 @@ def save_stock() -> Stock:
     return stock
 
 
-class TestStockViewSet(TestCase):
+class TestStockView(TestCase):
     path: str = '/stock/'
 
     def test_create_stock_should_pass(self) -> None:

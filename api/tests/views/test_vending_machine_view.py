@@ -18,7 +18,7 @@ def save_vending_machine() -> VendingMachine:
     return vending_machine
 
 
-class TestVendingMachineViewSet(TestCase):
+class TestVendingMachineView(TestCase):
     path: str = '/vending-machine/'
 
     def test_create_vending_machine_should_pass(self):

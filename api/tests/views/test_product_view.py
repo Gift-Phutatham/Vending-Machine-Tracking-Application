@@ -17,7 +17,7 @@ def save_product() -> Product:
     return product
 
 
-class TestProductViewSet(TestCase):
+class TestProductView(TestCase):
     path: str = '/product/'
 
     def test_create_product_should_pass(self):
