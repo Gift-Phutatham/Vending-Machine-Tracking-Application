@@ -4,14 +4,14 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
-from api.views.product_view_set import ProductViewSet
-from api.views.stock_view_set import StockViewSet
-from api.views.vending_machine_view_set import VendingMachineViewSet
+from api.views.product_view_set import ProductView
+from api.views.stock_view_set import StockView
+from api.views.vending_machine_view_set import VendingMachineView
 
 router: DefaultRouter = routers.DefaultRouter()
-router.register(r'vending-machine', VendingMachineViewSet)
-router.register(r'product', ProductViewSet)
-router.register(r'stock', StockViewSet)
+router.register(r'vending-machine', VendingMachineView)
+router.register(r'product', ProductView)
+router.register(r'stock', StockView)
 
 urlpatterns: List = [
     path('', include(router.urls)),
