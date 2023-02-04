@@ -61,14 +61,14 @@ class TestProductView(TestCase):
         self.assertEqual(response.data[0]['name'], saved_product.name)
         self.assertEqual(response.data[0]['cost'], saved_product.cost)
 
-    def test_view_product_should_pass(self):
+    def test_retrieve_product_should_pass(self):
         saved_product: Product = save_product()
         response = self.client.get(f'{self.path}{saved_product.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], saved_product.name)
         self.assertEqual(response.data['cost'], saved_product.cost)
 
-    def test_view_product_should_fail_when_id_is_not_found(self):
+    def test_retrieve_product_should_fail_when_id_is_not_found(self):
         response = self.client.get(f'{self.path}1/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 

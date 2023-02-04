@@ -128,7 +128,7 @@ class TestStockView(TestCase):
         self.assertEqual(response.data[0]['product'], saved_stock.product.id)
         self.assertEqual(response.data[0]['quantity'], saved_stock.quantity)
 
-    def test_view_stock_should_pass(self) -> None:
+    def test_retrieve_stock_should_pass(self) -> None:
         saved_stock: Stock = save_stock()
         response = self.client.get(f'{self.path}{saved_stock.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -136,7 +136,7 @@ class TestStockView(TestCase):
         self.assertEqual(response.data['product'], saved_stock.product.id)
         self.assertEqual(response.data['quantity'], saved_stock.quantity)
 
-    def test_view_stock_should_fail_when_id_is_not_found(self) -> None:
+    def test_retrieve_stock_should_fail_when_id_is_not_found(self) -> None:
         response = self.client.get(f'{self.path}1/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 

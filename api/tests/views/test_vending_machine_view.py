@@ -75,7 +75,7 @@ class TestVendingMachineView(TestCase):
         self.assertEqual(response.data[0]['location'], saved_vending_machine.location)
         self.assertEqual(response.data[0]['is_active'], saved_vending_machine.is_active)
 
-    def test_view_vending_machine_should_pass(self):
+    def test_retrieve_vending_machine_should_pass(self):
         saved_vending_machine: VendingMachine = save_vending_machine()
         response = self.client.get(f'{self.path}{saved_vending_machine.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -83,7 +83,7 @@ class TestVendingMachineView(TestCase):
         self.assertEqual(response.data['location'], saved_vending_machine.location)
         self.assertEqual(response.data['is_active'], saved_vending_machine.is_active)
 
-    def test_view_vending_machine_should_fail_when_id_is_not_found(self):
+    def test_retrieve_vending_machine_should_fail_when_id_is_not_found(self):
         response = self.client.get(f'{self.path}1/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
