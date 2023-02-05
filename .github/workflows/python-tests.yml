@@ -89,6 +89,7 @@ jobs:
           DJANGO_DB_NAME: ${{ secrets.POSTGRES_DB }}
           DJANGO_DB_USER: ${{ secrets.POSTGRES_USER }}
           DJANGO_DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          DJANGO_DB_HOST: ${{ secrets.PGHOST }}
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2
