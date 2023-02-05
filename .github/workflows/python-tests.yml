@@ -71,6 +71,7 @@ jobs:
 
       - name: Test with Pytest
         run: |
+          export DJANGO_SETTINGS_MODULE=vending_machine_tracking_application.settings
           poetry run pytest
 
       - name: Upload coverage report artifact
