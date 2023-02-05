@@ -6,10 +6,7 @@ from api.models.vending_machine import VendingMachine
 
 
 class Stock(models.Model):
-    """
-    Stock model.
-    Related to VendingMachine and Product.
-    """
+    """Stock model, related to VendingMachine and Product."""
 
     id: AutoField = models.AutoField(primary_key=True)
     vending_machine: VendingMachine = models.ForeignKey(VendingMachine, on_delete=models.CASCADE)
@@ -18,5 +15,5 @@ class Stock(models.Model):
 
     class Meta:
         constraints: list[UniqueConstraint] = [
-            models.UniqueConstraint(fields=['vending_machine', 'product'], name='vending_machine_product')
+            models.UniqueConstraint(fields=["vending_machine", "product"], name="vending_machine_product")
         ]

@@ -4,9 +4,7 @@ from django.db.models import AutoField, CharField, DecimalField
 
 
 class Product(models.Model):
-    """
-    Product model.
-    """
+    """Product model."""
 
     id: AutoField = models.AutoField(primary_key=True)
     name: CharField = models.CharField(max_length=100, unique=True)

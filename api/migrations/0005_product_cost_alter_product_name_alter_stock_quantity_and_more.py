@@ -7,33 +7,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0004_product_stock'),
+        ("api", "0004_product_stock"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='product',
-            name='cost',
-            field=models.DecimalField(decimal_places=2, default=1.1, max_digits=10, validators=[django.core.validators.MinValueValidator(0)]),
+            model_name="product",
+            name="cost",
+            field=models.DecimalField(
+                decimal_places=2,
+                default=1.1,
+                max_digits=10,
+                validators=[django.core.validators.MinValueValidator(0)],
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='product',
-            name='name',
+            model_name="product",
+            name="name",
             field=models.CharField(max_length=100, unique=True),
         ),
         migrations.AlterField(
-            model_name='stock',
-            name='quantity',
+            model_name="stock",
+            name="quantity",
             field=models.PositiveIntegerField(),
         ),
         migrations.AlterField(
-            model_name='vendingmachine',
-            name='name',
+            model_name="vendingmachine",
+            name="name",
             field=models.CharField(max_length=100, unique=True),
         ),
         migrations.AddConstraint(
-            model_name='stock',
-            constraint=models.UniqueConstraint(fields=('vending_machine', 'product'), name='vending_machine_product'),
+            model_name="stock",
+            constraint=models.UniqueConstraint(fields=("vending_machine", "product"), name="vending_machine_product"),
         ),
     ]
