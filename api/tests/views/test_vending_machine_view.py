@@ -12,6 +12,7 @@ class TestVendingMachineView(TestCase):
     """Test vending machine view."""
 
     path: str = "/vending-machine/"
+    content_type: str = "application/json"
 
     def test_create_vending_machine_should_pass(self) -> None:
         """Test create vending machine with valid request."""
@@ -20,7 +21,7 @@ class TestVendingMachineView(TestCase):
             "location": secrets.token_hex(16),
             "is_active": True,
         }
-        response: Any = self.client.post(self.path, data=new_vending_machine, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_vending_machine, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["name"], new_vending_machine["name"])
         self.assertEqual(response.data["location"], new_vending_machine["location"])
@@ -29,7 +30,7 @@ class TestVendingMachineView(TestCase):
     def test_create_vending_machine_should_fail_when_name_is_null(self) -> None:
         """Test create vending machine with invalid request where name is null."""
         new_vending_machine: dict[str, Any] = {"location": secrets.token_hex(16)}
-        response: Any = self.client.post(self.path, data=new_vending_machine, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_vending_machine, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_vending_machine_should_fail_when_name_is_duplicate(self) -> None:
@@ -40,13 +41,13 @@ class TestVendingMachineView(TestCase):
             "location": secrets.token_hex(16),
             "is_active": True,
         }
-        response: Any = self.client.post(self.path, data=new_vending_machine, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_vending_machine, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_vending_machine_should_fail_when_location_is_null(self) -> None:
         """Test create vending machine with invalid request where location is null."""
         new_vending_machine: dict[str, Any] = {"name": secrets.token_hex(16)}
-        response: Any = self.client.post(self.path, data=new_vending_machine, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_vending_machine, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_vending_machine_should_fail_when_is_active_is_invalid(self) -> None:
@@ -56,7 +57,7 @@ class TestVendingMachineView(TestCase):
             "location": secrets.token_hex(16),
             "is_active": "x",
         }
-        response: Any = self.client.post(self.path, data=new_vending_machine, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_vending_machine, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_list_vending_machine_should_pass(self) -> None:
@@ -93,7 +94,7 @@ class TestVendingMachineView(TestCase):
         response: Any = self.client.put(
             f"{self.path}{saved_vending_machine.id}/",
             data=new_vending_machine,
-            content_type="application/json",
+            content_type=self.content_type,
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["name"], new_vending_machine["name"])
@@ -107,7 +108,7 @@ class TestVendingMachineView(TestCase):
             "location": secrets.token_hex(16),
             "is_active": True,
         }
-        response: Any = self.client.put(f"{self.path}99999/", data=new_vending_machine, content_type="application/json")
+        response: Any = self.client.put(f"{self.path}99999/", data=new_vending_machine, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_vending_machine_should_pass(self) -> None:

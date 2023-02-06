@@ -14,6 +14,7 @@ class TestStockView(TestCase):
     """Test stock view."""
 
     path: str = "/stock/"
+    content_type: str = "application/json"
 
     def test_create_stock_should_pass(self) -> None:
         """Test create stock with valid request."""
@@ -24,7 +25,7 @@ class TestStockView(TestCase):
             "product": saved_product.id,
             "quantity": secrets.randbelow(100),
         }
-        response: Any = self.client.post(self.path, data=new_stock, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["vending_machine"], new_stock["vending_machine"])
         self.assertEqual(response.data["product"], new_stock["product"])
@@ -37,7 +38,7 @@ class TestStockView(TestCase):
             "product": saved_product.id,
             "quantity": secrets.randbelow(100),
         }
-        response: Any = self.client.post(self.path, data=new_stock, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_stock_should_fail_when_vending_machine_id_is_not_found(
@@ -50,7 +51,7 @@ class TestStockView(TestCase):
             "product": saved_product.id,
             "quantity": secrets.randbelow(100),
         }
-        response: Any = self.client.post(self.path, data=new_stock, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_stock_should_fail_when_product_is_null(self) -> None:
@@ -60,7 +61,7 @@ class TestStockView(TestCase):
             "vending_machine": saved_vending_machine.id,
             "quantity": secrets.randbelow(100),
         }
-        response: Any = self.client.post(self.path, data=new_stock, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_stock_should_fail_when_product_id_is_not_found(self) -> None:
@@ -71,7 +72,7 @@ class TestStockView(TestCase):
             "product": 99999,
             "quantity": secrets.randbelow(100),
         }
-        response: Any = self.client.post(self.path, data=new_stock, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_stock_should_fail_when_quantity_is_null(self) -> None:
@@ -82,7 +83,7 @@ class TestStockView(TestCase):
             "vending_machine": saved_vending_machine.id,
             "product": saved_product.id,
         }
-        response: Any = self.client.post(self.path, data=new_stock, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_stock_should_fail_when_quantity_is_invalid(self) -> None:
@@ -94,7 +95,7 @@ class TestStockView(TestCase):
             "product": saved_product.id,
             "quantity": "x",
         }
-        response: Any = self.client.post(self.path, data=new_stock, content_type="application/json")
+        response: Any = self.client.post(self.path, data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_list_stock_should_pass(self) -> None:
@@ -131,7 +132,7 @@ class TestStockView(TestCase):
         response: Any = self.client.put(
             f"{self.path}{saved_stock.id}/",
             data=new_stock,
-            content_type="application/json",
+            content_type=self.content_type,
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["vending_machine"], new_stock["vending_machine"])
@@ -147,7 +148,7 @@ class TestStockView(TestCase):
             "product": saved_product.id,
             "quantity": secrets.randbelow(100),
         }
-        response: Any = self.client.put(f"{self.path}99999/", data=new_stock, content_type="application/json")
+        response: Any = self.client.put(f"{self.path}99999/", data=new_stock, content_type=self.content_type)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_stock_should_pass(self) -> None:
