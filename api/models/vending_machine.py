@@ -1,11 +1,9 @@
 from django.db import models
-from django.db.models import AutoField, CharField, BooleanField
+from django.db.models import AutoField, BooleanField, CharField
 
 
 class VendingMachine(models.Model):
-    """
-    Vending Machine model.
-    """
+    """Vending Machine model."""
 
     id: AutoField = models.AutoField(primary_key=True)
     name: CharField = models.CharField(max_length=100, unique=True)
