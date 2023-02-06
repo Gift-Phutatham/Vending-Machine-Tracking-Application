@@ -1,5 +1,8 @@
 # Vending-Machine-Tracking-Application
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Gift-Phutatham_Vending-Machine-Tracking-Application&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Gift-Phutatham_Vending-Machine-Tracking-Application)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Gift-Phutatham_Vending-Machine-Tracking-Application&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Gift-Phutatham_Vending-Machine-Tracking-Application)
+
 ## How to Run the Project
 
 ```
